@@ -1,4 +1,4 @@
-'''
+"""
  Copyright (c) 2018-2019. Andrew D. King. All Rights Reserved.
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -18,14 +18,14 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
-'''
+"""
 
-'''
+"""
 Configuration and other constants for use when looking up
 configuration values or when default values may be needed.
  
 @author: aking
-'''
+"""
 
 SECTION_SEPARATOR     = '.'
 
@@ -84,6 +84,7 @@ ENABLE_AUTH_KEY       = 'enableAuth'
 ENABLE_CRYPT_KEY      = 'enableCrypt'
 ENABLE_EMULATOR_KEY   = 'enableEmulator'
 ENABLE_LOGGING_KEY    = 'enableLogging'
+USE_WEB_ACCESS_KEY    = 'useWebAccess'
 POLL_CYCLES_KEY       = 'pollCycleSecs'
 
 KEEP_ALIVE_KEY        = 'keepAlive'

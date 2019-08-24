@@ -1,4 +1,4 @@
-'''
+"""
  Copyright (c) 2018-2019. Andrew D. King. All Rights Reserved.
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -18,37 +18,37 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
-'''
+"""
 
 import configparser
 import os
 
-'''
+"""
 A simple utility wrapper around the built-in Python
 configuration infrastructure.
  
 @author: aking
-'''
+"""
 class ConfigUtil:
     configPath = '/mnt/e/aking/Documents/workspace/iot-device/data'
     configFile = configPath + '/' + 'ConnectedDevicesConfig.props'
     configData = configparser.ConfigParser()
     isLoaded   = False
     
-    '''
+    """
     Constructor for ConfigUtil.
     
     @param configFile The name of the configuration file to load.
-    '''
+    """
     def __init__(self, configFile = None):
         if (configFile != None):
             self.configFile = configFile
     
-    '''
+    """
     Attempts to load the config file using the name passed into
     the constructor.
      
-    '''
+    """
     def loadConfig(self):
         print(str(os.listdir(self.configPath)))
         
@@ -63,44 +63,63 @@ class ConfigUtil:
         
         print("Config: " + str(self.configData.sections()))
 
-    '''
+    """
     Returns the entire configuration object. If the config file hasn't
     yet been loaded, it will be loaded.
     
     @param forceReload Defaults to false; if true, will reload the config.
     @return: The entire configuration file.
      
-    '''
+    """
     def getConfig(self, forceReload = False):
         if (self.isLoaded == False or forceReload):
             self.loadConfig()
         
         return self.configData
     
-    '''
+    """
     Returns the name of the configuration file.
     
     @return: The name of the config file.
-    '''
+    """
     def getConfigFile(self):
         return self.configFile
 
-    '''
+    """
     Attempts to retrieve the value of 'key' from the config.
     
     @param: section The name of the section to parse.
     @param: key The name of the key to lookup in 'section'.
     @param: forceReload Defaults to false; if true will reload the config.
     @return: The property associated with 'key' in 'section'.
-    '''
+    """
     def getProperty(self, section, key, forceReload = False):
         return self.getConfig(forceReload).get(section, key)
     
-    '''
+    """
+    Checks if a given 'key' exists in the named section of the loaded config.
+    
+    @param: section The name of the section to search.
+    @param: key The name of the key to lookup in 'section'.
+    @return: True if 'key' is found in 'section'; false otherwise.
+    """
+    def hasProperty(self, section, key):
+        return self.getConfig().has_option(section, key)
+        
+    """
+    Checks if a given 'section' exists in the loaded config.
+    
+    @param: section The name of the section to search.
+    @return: True if 'section' exists and has parameters; false otherwise.
+    """
+    def hasSection(self, section, key):
+        return self.getConfig().has_option(section, key)
+        
+    """
     Simple boolean check if the config data is loaded or not.
     
     @return: boolean True on success; false otherwise.
-    '''
+    """
     def isConfigDataLoaded(self):
         return self.isLoaded
     
