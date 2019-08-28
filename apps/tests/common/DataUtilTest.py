@@ -2,7 +2,7 @@ import unittest
 
 
 """
-Test class for all requisite Project functionality.
+Test class for all requisite DataUtil functionality.
 
 Instructions:
 1) Rename 'testSomething()' function such that 'Something' is specific to your needs; add others as needed, beginning each function with 'test...()'.
@@ -10,7 +10,7 @@ Instructions:
 3) Run this class as unit test app
 4) Include a screen shot of the report when you submit your assignment
 """
-class ProjectTest(unittest.TestCase):
+class Module01Test(unittest.TestCase):
 
 	"""
 	Use this to setup your tests. This is where you may want to load configuration
@@ -26,7 +26,7 @@ class ProjectTest(unittest.TestCase):
 	"""
 	def tearDown(self):
 		pass
-
+	
 	"""
 	Place your comments describing the test here.
 	"""

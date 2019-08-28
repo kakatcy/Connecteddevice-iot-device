@@ -2,14 +2,13 @@ import unittest
 
 
 """
-Test class for all requisite Module 08 functionality.
+Test class for all requisite Module08 functionality.
 
 Instructions:
-1) Delete the two lines containing 'DELETE THIS LINE when Module is complete' when you're ready to write your tests.
-2) Rename 'testSomething()' function such that 'Something' is specific to your needs; add others as needed, beginning each function with 'test...()'.
-3) Import the relevant modules and classes to support your tests.
-4) Run this class as unit test app
-5) Include a screen shot of the report when you submit your assignment
+1) Rename 'testSomething()' function such that 'Something' is specific to your needs; add others as needed, beginning each function with 'test...()'.
+2) Import the relevant modules and classes to support your tests.
+3) Run this class as unit test app
+4) Include a screen shot of the report when you submit your assignment
 """
 class Module08Test(unittest.TestCase):
 
@@ -28,13 +27,12 @@ class Module08Test(unittest.TestCase):
 	def tearDown(self):
 		pass
 
-""" DELETE THIS LINE when Module is complete
-
+	"""
+	Place your comments describing the test here.
+	"""
 	def testSomething(self):
 		pass
 
-	DELETE THIS LINE when Module is complete"""
-	
 if __name__ == "__main__":
 	#import sys;sys.argv = ['', 'Test.testName']
 	unittest.main()
