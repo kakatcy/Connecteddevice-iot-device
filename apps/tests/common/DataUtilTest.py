@@ -10,7 +10,7 @@ Instructions:
 3) Run this class as unit test app
 4) Include a screen shot of the report when you submit your assignment
 """
-class Module01Test(unittest.TestCase):
+class DataUtilTest(unittest.TestCase):
 
 	"""
 	Use this to setup your tests. This is where you may want to load configuration
