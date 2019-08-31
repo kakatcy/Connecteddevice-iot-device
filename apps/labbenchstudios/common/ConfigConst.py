@@ -29,7 +29,7 @@ configuration values or when default values may be needed.
 
 SECTION_SEPARATOR     = '.'
 
-DEFAULT_CONFIG_FILE_NAME = '/home/pi/workspace/iot-device/config/ConnectedDevicesConfig.props'
+DEFAULT_CONFIG_FILE_NAME = '../../../config/ConnectedDevicesConfig.props'
 
 DEFAULT_HOST          = '127.0.0.1'
 DEFAULT_COAP_PORT     = 5683
