@@ -1,5 +1,6 @@
 import unittest
-
+from labs.module01.SystemCpuUtilTask import SystemCpuUtilTask
+from labs.module01.SystemMemUtilTask import SystemMemUtilTask
 
 """
 Test class for all requisite Module01 functionality.
@@ -30,8 +31,14 @@ class Module01Test(unittest.TestCase):
 	"""
 	Place your comments describing the test here.
 	"""
-	def testSomething(self):
-		pass
+	def testCpurate(self):
+		cpurate = SystemCpuUtilTask.getDataFromSensor(self)
+		assert cpurate>0.0 and cpurate<100.0
+	
+	def testMemrate(self):
+		memrate = SystemMemUtilTask.getDataFromSensor(self)
+		assert memrate>0.0 and memrate<100.0
+		
 
 if __name__ == "__main__":
 	#import sys;sys.argv = ['', 'Test.testName']
