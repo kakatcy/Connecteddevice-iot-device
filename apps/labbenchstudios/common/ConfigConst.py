@@ -88,3 +88,4 @@ USE_WEB_ACCESS_KEY    = 'useWebAccess'
 POLL_CYCLES_KEY       = 'pollCycleSecs'
 
 KEEP_ALIVE_KEY        = 'keepAlive'
+NOMINAL_TEMP_KEY      = 'nominalTemp'

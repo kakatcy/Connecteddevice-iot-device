@@ -36,13 +36,13 @@ class SmtpClientConnector():
         msg['To']= toAddr
         msg['Subject'] = topic
         msgBody = str(data)
-     #   msgBody = "welcome to python"
+        #   msgBody = "welcome to python"
 
         #    msg.attach(mimeText(msgBody)) 
         msg.attach(MIMEText(msgBody)) 
         msgText = msg.as_string()
 
-         # send e-mail notification
+        # send e-mail notification
         smtpServer = smtplib.SMTP_SSL(host, port) 
         smtpServer.ehlo()
         smtpServer.login(fromAddr, authToken) 
