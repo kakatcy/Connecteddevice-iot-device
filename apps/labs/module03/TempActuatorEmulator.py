@@ -23,4 +23,5 @@ class TempActuatorEmulator(ActuatorData):
             self.actuatordata.updateData(data)
             #senseHatLedActivator = SenseHatLedActivator()
             senseHatLedActivator.setEnableLedFlag(True)
+            print(self.actuatordata.getStateData())
             senseHatLedActivator.setDisplayMessage(round(self.actuatordata.getStateData(), 3))

@@ -27,7 +27,9 @@ class SenseHatLedActivator(threading.Thread):
         while True:
             if self.enableLed:
                 if self.displayMsg != None:
-                    self.sh.show_message(str(self.displayMsg))
+                    print(str(self.displayMsg))
+                    self.sh.show_message('show:'+str(self.displayMsg))
+                    sleep(5)
                 else:
                     self.sh.show_letter(str('R'))
                     sleep(self.rateInSec)
