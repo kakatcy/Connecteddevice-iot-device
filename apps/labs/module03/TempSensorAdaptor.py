@@ -36,20 +36,19 @@ class TempSensorAdaptor(threading.Thread):
         while True:
             sense = SenseHat()
             temperature = sense.get_temperature()
-            print("real temperature:")
-            print(temperature)
             sensordata.addValue(temperature)
             
+            #smtp module
             if(abs(sensordata.getValue()-sensordata.getAvgValue())>=self.threshold):
                 logging.info('\n  Current temp exceeds average by > ' + str(self.threshold) + '. Triggering alert...')
                 smtpClientConnector = SmtpClientConnector.SmtpClientConnector()
                 smtpClientConnector.publishMessage("Excessive Temp", sensordata)
                 
             nomialtemp = self.config.getProperty(ConfigConst.CONSTRAINED_DEVICE,ConfigConst.NOMINAL_TEMP_KEY)
-            print("nomialtemp temperture")
-            print(nomialtemp)
             
+            #senseHat Led module
             if(sensordata.getValue != nomialtemp):
+                logging.info('\n temperature is different from nomialtemp')
                 actuatordata = ActuatorData()   
                 actuatordata.command = 1
                 actuatordata.statusCode = 1
@@ -57,4 +56,4 @@ class TempSensorAdaptor(threading.Thread):
                 actuatordata.val = temperature
                 actuatordata.stateData = temperature - float(nomialtemp)
                 TempActuatorEmulator().processMessage(actuatordata, senseledThread)
-            time.sleep(30)
+            time.sleep(10)

@@ -21,22 +21,6 @@ class TempActuatorEmulator(ActuatorData):
         gap = data.val - self.actuatordata.val
         if(gap!=0):
             self.actuatordata.updateData(data)
-            print("renewed temperature")
-            print(self.actuatordata.val)
-            if(gap>0):
-                print("increase ")
-                print(gap)
-            if(gap<0):
-                print("decrease ")
-                print(gap)
             #senseHatLedActivator = SenseHatLedActivator()
             senseHatLedActivator.setEnableLedFlag(True)
-            senseHatLedActivator.setDisplayMessage(self.actuatordata.val)
-        #    self.senseHatLedActivator.run() 
-            #print("1111111") 
-         #   thread.start(SenseHatLedActivator.run(),"display",2)
-         #   t1 = threading.Thread(target=SenseHatLedActivator,args=())
-         #   t1.start()
-        
-            #senseHatLedActivator.run()
-            #print("0000000")
+            senseHatLedActivator.setDisplayMessage(round(self.actuatordata.getStateData(), 3))
