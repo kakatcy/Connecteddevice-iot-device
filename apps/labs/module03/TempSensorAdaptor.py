@@ -47,13 +47,19 @@ class TempSensorAdaptor(threading.Thread):
             nomialtemp = self.config.getProperty(ConfigConst.CONSTRAINED_DEVICE,ConfigConst.NOMINAL_TEMP_KEY)
             
             #senseHat Led module
+            actuatordata = ActuatorData()
             if(sensordata.getValue != nomialtemp):
-                logging.info('\n temperature is different from nomialtemp')
-                actuatordata = ActuatorData()   
+                logging.info('\n temperature is different from nomialtemp')   
                 actuatordata.command = 1
                 actuatordata.statusCode = 1
                 actuatordata.errCode = 0
                 actuatordata.val = temperature
                 actuatordata.stateData = temperature - float(nomialtemp)
                 TempActuatorEmulator().processMessage(actuatordata, senseledThread)
+            else:
+                logging.info('\n temperature is equal to nomialtemp')   
+                actuatordata.command = 1
+                actuatordata.statusCode = 0
+                actuatordata.errCode = 0
+                actuatordata.val = temperature
             time.sleep(10)

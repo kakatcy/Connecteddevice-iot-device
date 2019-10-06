@@ -1,5 +1,7 @@
 import unittest
 
+from labs.common.SensorData import SensorData
+from labs.common.ActuatorData import ActuatorData
 
 """
 Test class for all requisite Module03 functionality.
@@ -30,8 +32,31 @@ class Module03Test(unittest.TestCase):
 	"""
 	Place your comments describing the test here.
 	"""
-	def testSomething(self):
+	def testUpdateValue(self):
+		actuatorData = ActuatorData()
+		testData = ActuatorData()
+		testData.val = 10
+		actuatorData.updateData(testData)
+		assert actuatorData.val==10
+		
 		pass
+	
+	def testAddValue(self):
+		testValue = 10.0
+		sensordata = SensorData()
+		sensordata.addValue(testValue)
+		sampleCount = sensordata.getSampleCount()
+		assert sampleCount==1
+		curValue =sensordata.getValue()
+		assert curValue==testValue
+		avgValue =sensordata.getAvgValue()
+		assert avgValue==testValue
+		minValue =sensordata.getMinValue()
+		assert minValue==testValue
+		maxValue =sensordata.getMaxValue()
+		assert maxValue==testValue
+		totValue =sensordata.getTotValue()
+		assert totValue==testValue
 
 if __name__ == "__main__":
 	#import sys;sys.argv = ['', 'Test.testName']

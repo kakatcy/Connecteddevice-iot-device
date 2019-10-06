@@ -17,10 +17,10 @@ class TempActuatorEmulator(ActuatorData):
         '''
         
         
-    def processMessage(self, data, senseHatLedActivator):
-        gap = data.val - self.actuatordata.val
+    def processMessage(self, actuatordata, senseHatLedActivator):
+        gap = actuatordata.val - self.actuatordata.val
         if(gap!=0):
-            self.actuatordata.updateData(data)
+            self.actuatordata.updateData(actuatordata)
             #senseHatLedActivator = SenseHatLedActivator()
             senseHatLedActivator.setEnableLedFlag(True)
             print(self.actuatordata.getStateData())
