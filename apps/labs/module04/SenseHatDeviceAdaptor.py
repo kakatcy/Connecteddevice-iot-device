@@ -4,6 +4,7 @@ Created on Oct 7, 2019
 @author: cytang
 '''
 import threading
+import logging
 from time import sleep
 from sense_hat import SenseHat
 
@@ -17,12 +18,12 @@ class SenseHatDeviceAdaptor(threading.Thread):
     #get humidity by using sensehat python package
     def displayHumidity(self):
         humidity = self.sense_hat.get_humidity()
-        print("humidity from sensehat:" + str(humidity))
+        logging.info("humidity from sensehat:" + str(humidity))
     
     #get temperature by using sensehat python package
     def displayTemp(self):
         temp = self.sense_hat.get_temperature_from_humidity()
-        print("temperature from sensehat:" + str(temp))
+        logging.info("temperature from sensehat:" + str(temp))
         
     def run(self):
         while True:

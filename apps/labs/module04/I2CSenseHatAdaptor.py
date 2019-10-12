@@ -67,8 +67,7 @@ class I2CSenseHatAdaptor(threading.Thread):
         if(humidity>100):
             humidity = 100
 
-        print("humidity from i2c:" + str(humidity))
-        logging.info("humidity from i2c:" + str(humidity) + "\n")
+        logging.info("humidity from i2c:" + str(humidity))
 
     def displayTemperatureData(self):
         #1. Read from 0x32 & 0x33 registers the value of coefficients T0_degC_x8 and T1_degC_x8
@@ -101,8 +100,7 @@ class I2CSenseHatAdaptor(threading.Thread):
         # 6.Compute the Temperature value by linear interpolation
         tmp32 = ((T_OUT - T0_OUT)) * ((T1_degC - T0_degC));
         temperature = tmp32 /(T1_OUT - T0_OUT) + T0_degC;
-        print("temperature from i2c:"+str(temperature))
-        logging.info("temperature from i2c:"+str(temperature) + "\n")
+        logging.info("temperature from i2c:"+str(temperature))
     
     #if data is negative integer, call this method        
     def checknegative(self,data):
