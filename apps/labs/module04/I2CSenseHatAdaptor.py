@@ -47,6 +47,10 @@ class I2CSenseHatAdaptor(threading.Thread):
         H0_T0_36 = i2cBus.read_byte_data(humidAddr,0x36)
         H0_T0_37 = i2cBus.read_byte_data(humidAddr,0x37) 
         H0_T0_out = (H0_T0_37<<8) | H0_T0_36
+        print(sys.getsizeof(H0_T0_37))
+        print(sys.getsizeof(H0_T0_36))
+        print(str(H0_T0_37& 0xffff))
+        print(str(H0_T0_36& 0xffff))
         print("H0_T0_36:"+str(H0_T0_36)+" H0_T0_37:"+str(H0_T0_37))
         print("H0_T0_out:"+str(H0_T0_out)+"\n")
        
