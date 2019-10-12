@@ -49,8 +49,10 @@ class I2CSenseHatAdaptor(threading.Thread):
         H0_T0_out = (H0_T0_37<<8) | H0_T0_36
         print(sys.getsizeof(H0_T0_37))
         print(sys.getsizeof(H0_T0_36))
-        print(str(H0_T0_37& 0xffff))
-        print(str(H0_T0_36& 0xffff))
+        print(str(H0_T0_37 & 0xffff))
+        print(str(H0_T0_36 & 0xffff))
+        print(sys.getsizeof(H0_T0_out))
+        print(str(H0_T0_out & 0xffffff))
         print("H0_T0_36:"+str(H0_T0_36)+" H0_T0_37:"+str(H0_T0_37))
         print("H0_T0_out:"+str(H0_T0_out)+"\n")
        
@@ -61,6 +63,8 @@ class I2CSenseHatAdaptor(threading.Thread):
         print(sys.getsizeof(H1_T0_3B))
         print(str(H1_T0_3A& 0xffff))
         print(str(H1_T0_3B& 0xffff))
+        print(sys.getsizeof(H1_T0_out))
+        print(str(H0_T0_out& 0xffffff))
         print("H1_T0_3A:"+str(H1_T0_3A)+" H1_T0_3B:"+str(H1_T0_3B))
         print("H1_T0_out:"+str(H1_T0_out)+"\n")
 
@@ -72,6 +76,8 @@ class I2CSenseHatAdaptor(threading.Thread):
         print(sys.getsizeof(H_T_29))
         print(str(H_T_28& 0xffff))
         print(str(H_T_29& 0xffff))
+        print(sys.getsizeof(H_T_out))
+        print(str(H_T_out& 0xffffff))
         print("H_T_28:"+str(H_T_28)+" H_T_29:"+str(H_T_29))
         print("H_T_out:"+str(H_T_out)+"\n")
         
