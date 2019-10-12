@@ -64,7 +64,7 @@ class I2CSenseHatAdaptor(threading.Thread):
         print(str(H1_T0_3A& 0xffff))
         print(str(H1_T0_3B& 0xffff))
         print(sys.getsizeof(H1_T0_out))
-        print(str(H0_T0_out& 0xffffff))
+        print(str(H1_T0_out& 0xffffff))
         print("H1_T0_3A:"+str(H1_T0_3A)+" H1_T0_3B:"+str(H1_T0_3B))
         print("H1_T0_out:"+str(H1_T0_out)+"\n")
 
