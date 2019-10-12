@@ -98,7 +98,7 @@ class I2CSenseHatAdaptor(threading.Thread):
         if(data>=0x80):
             data=data-1
             print("negative:"+str(data))
-            data=data^0xff
+            data=data^0xffff
             print("negative:"+str(data))
             data = 0-data
             print("negative:"+str(data))
