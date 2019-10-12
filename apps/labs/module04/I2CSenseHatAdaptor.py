@@ -40,11 +40,16 @@ class I2CSenseHatAdaptor(threading.Thread):
         buffer = i2cBus.read_i2c_block_data(humidAddr,begAddr,4)
         H0_rh = buffer[2]>>1
         H1_rh = buffer[3]>>1
-        print("H0_rh:"+str(H0_rh))
-        print("H1_rh:"+str(H1_rh))
+        H0_rh1 = i2cBus.read_byte_data(humidAddr,0x30)>>1
+        H1_rh1 = i2cBus.read_byte_data(humidAddr,0x31)>>1
+        print("H0_rh:"+str(H0_rh) + " H0_rh1:"+str(H0_rh1))
+        print("H1_rh:"+str(H1_rh) + " H1_rh1:"+str(H1_rh1))
+        
         buffer_h0t0out = i2cBus.read_i2c_block_data(humidAddr,0x36,2)
         H0_T0_out = (buffer_h0t0out[1]<<8) | buffer_h0t0out[0]
-        print("H0_T0_out:"+str(H0_T0_out))
+        
+        H0_T0_out1 = (i2cBus.read_byte_data(humidAddr,0x37)<<8) | i2cBus.read_byte_data(humidAddr,0x36)
+        print("H0_T0_out:"+str(H0_T0_out)+" H0_T0_out1:"+str(H0_T0_out1))
         
         buffer_h1t0out = i2cBus.read_i2c_block_data(humidAddr,0x3A,2)
         H1_T0_out = (buffer_h1t0out[1]<<8) | buffer_h1t0out[0]
