@@ -11,7 +11,7 @@ class SenseHatDeviceAdaptor(threading.Thread):
 
 
     def __init__(self):
-        super(SenseHatDeviceAdaptor,self).__init__(self)
+        super(SenseHatDeviceAdaptor,self).__init__()
         pass
     
     def displayHumidity(self):

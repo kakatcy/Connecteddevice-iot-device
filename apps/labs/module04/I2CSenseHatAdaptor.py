@@ -37,16 +37,16 @@ class I2CSenseHatAdaptor(threading.Thread):
         i2cBus.write_byte_data(humidAddr, 0, 0)
         
     def displayHumidityData(self):
-        buffer = i2cBus.read_byte_data(humidAddr,begAddr,4)
+        buffer = i2cBus.read_i2c_block_data(humidAddr,begAddr,4)
         H0_rh = buffer[2]>>1
         H1_rh = buffer[3]>>1
         print("H0_rh:"+H0_rh)
         print("H1_rh:"+H1_rh)
-        buffer_h0t0out = i2cBus.read_byte_data(humidAddr,0x36,2)
+        buffer_h0t0out = i2cBus.read_i2c_block_data(humidAddr,0x36,2)
         H0_T0_out = (buffer_h0t0out[1]<<8) | buffer_h0t0out[0]
         print("H0_T0_out:"+H0_T0_out)
         
-        buffer_h1t0out = i2cBus.read_byte_data(humidAddr,0x3A,2)
+        buffer_h1t0out = i2cBus.read_i2c_block_data(humidAddr,0x3A,2)
         H1_T0_out = (buffer_h1t0out[1]<<8) | buffer_h1t0out[0]
         print("H1_T0_out:"+H1_T0_out)
         
