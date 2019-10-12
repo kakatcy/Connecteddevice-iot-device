@@ -93,7 +93,34 @@ class I2CSenseHatAdaptor(threading.Thread):
             humidity = 1000
 
         print("humidity:" + str(humidity))
-    
+
+    def displayTemperatureData(self):
+        T0_degC_x8 = i2cBus.read_byte_data(humidAddr,0x32)
+        T1_degC_x8 = i2cBus.read_byte_data(humidAddr,0x33)
+        T_degC_x8_H = i2cBus.read_byte_data(humidAddr,0x35)
+        
+        T0_degC_x8_u16 = ((T_degC_x8_H & 0x03)<<8) | T0_degC_x8
+        T1_degC_x8_u16 = ((T_degC_x8_H & 0x0C)<<8) | T1_degC_x8
+         
+        T0_degC = T0_degC_x8_u16>>3
+        T1_degC = T1_degC_x8_u16>>3
+         
+        T0_OUT_L = i2cBus.read_byte_data(humidAddr,0x3C)
+        T0_OUT_H = i2cBus.read_byte_data(humidAddr,0x3D)
+        T0_OUT = (T0_OUT_H<<8)|T0_OUT_L
+        
+        T1_OUT_L = i2cBus.read_byte_data(humidAddr,0x3E)
+        T1_OUT_H = i2cBus.read_byte_data(humidAddr,0x3F)
+        T1_OUT = (T1_OUT_H<<8)|T1_OUT_L
+        
+        T_OUT_L = i2cBus.read_byte_data(humidAddr,0x2A)
+        T_OUT_H = i2cBus.read_byte_data(humidAddr,0x2B)
+        T_OUT = (T_OUT_H<<8)|T_OUT_L
+        
+        tmp32 = ((T_OUT - T0_OUT)) * ((T1_degC - T0_degC)*10);
+        temperature = tmp32 /(T1_OUT - T0_OUT) + T0_degC*10;
+        print("temp:"+str(temperature))
+            
     def checknegative(self,data):
         if(data>=0x80):
             data=data-1
@@ -111,5 +138,6 @@ class I2CSenseHatAdaptor(threading.Thread):
                 #self.displayAccelerometerData()
                 #self.displayMagnetometerData()
                 #self.displayPressureData()
-            self.displayHumidityData()
+            self.displayTemperatureData()
+            #self.displayHumidityData()
             sleep(self.rateInSec)
