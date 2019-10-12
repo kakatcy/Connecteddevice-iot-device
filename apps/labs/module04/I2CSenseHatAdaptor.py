@@ -75,7 +75,7 @@ class I2CSenseHatAdaptor(threading.Thread):
         H_T_28 = i2cBus.read_byte_data(humidAddr,0x28)
         H_T_29 = i2cBus.read_byte_data(humidAddr,0x29)
         H_T_out = (H_T_29<<8) | H_T_28
-        H1_T0_out = self.checknegative(H_T_out)
+        H_T_out = self.checknegative(H_T_out)
         print(sys.getsizeof(H_T_28))
         print(sys.getsizeof(H_T_29))
         print(str(H_T_28& 0xffff))
