@@ -100,7 +100,7 @@ class I2CSenseHatAdaptor(threading.Thread):
         T_degC_x8_H = i2cBus.read_byte_data(humidAddr,0x35)
         
         T0_degC_x8_u16 = ((T_degC_x8_H & 0x03)<<8) | T0_degC_x8
-        T1_degC_x8_u16 = ((T_degC_x8_H & 0x0C)<<8) | T1_degC_x8
+        T1_degC_x8_u16 = ((T_degC_x8_H & 0x0C)<<6) | T1_degC_x8
          
         T0_degC = T0_degC_x8_u16>>3
         T1_degC = T1_degC_x8_u16>>3
