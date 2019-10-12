@@ -37,53 +37,38 @@ class I2CSenseHatAdaptor(threading.Thread):
         i2cBus.write_byte_data(humidAddr, 0, 0)
         
     def displayHumidityData(self):
-        buffer = i2cBus.read_i2c_block_data(humidAddr,begAddr,4)
-        H0_rh = i2cBus.read_byte_data(humidAddr,0x30)
-        H1_rh = i2cBus.read_byte_data(humidAddr,0x31)
-        H0_rh1 = i2cBus.read_byte_data(humidAddr,0x30)>>1
-        H1_rh1 = i2cBus.read_byte_data(humidAddr,0x31)>>1
-        print("H0_rh:"+str(H0_rh) + " H0_rh1:"+str(H0_rh1))
-        print("H1_rh:"+str(H1_rh) + " H1_rh1:"+str(H1_rh1))
+        H0_rh = i2cBus.read_byte_data(humidAddr,0x30)>>1
+        H1_rh = i2cBus.read_byte_data(humidAddr,0x31)>>1
+        print("H0_rh:"+str(H0_rh))
+        print("H1_rh:"+str(H1_rh)+"\n")
         
-        buffer_h0t0out = i2cBus.read_i2c_block_data(humidAddr,0x36,2)
-        H0_T0_out = (buffer_h0t0out[1]<<8) | buffer_h0t0out[0]
-        
-        H0_T0_out1 = (i2cBus.read_byte_data(humidAddr,0x37)<<8) | i2cBus.read_byte_data(humidAddr,0x36)
         H0_T0_36 = i2cBus.read_byte_data(humidAddr,0x36)
         H0_T0_37 = i2cBus.read_byte_data(humidAddr,0x37) 
-        
-        print("H0_T0_out:"+str(H0_T0_out)+" H0_T0_out1:"+str(H0_T0_out1))
+        H0_T0_out = (H0_T0_37<<8) | H0_T0_36
         print("H0_T0_36:"+str(H0_T0_36)+" H0_T0_37:"+str(H0_T0_37))
-        print("H0_T0_36:1 "+str(H0_T0_36 & 0xff)+" H0_T0_37:1 "+str(H0_T0_37 & 0xff))
-        
-        buffer_h1t0out = i2cBus.read_i2c_block_data(humidAddr,0x3A,2)
-        H1_T0_out = (buffer_h1t0out[1]<<8) | buffer_h1t0out[0]
+        print("H0_T0_out:"+str(H0_T0_out)+"\n")
+       
         H1_T0_3A = i2cBus.read_byte_data(humidAddr,0x3A)
         H1_T0_3B = i2cBus.read_byte_data(humidAddr,0x3B)
-        H1_T0_out1 = (H1_T0_3B<<8) | H1_T0_3A
-        print("H1_T0_out:"+str(H1_T0_out) + " H1_T0_out1:"+str(H1_T0_out1))
+        H1_T0_out = (H1_T0_3B<<8) | H1_T0_3A
         print("H1_T0_3A:"+str(H1_T0_3A)+" H1_T0_3B:"+str(H1_T0_3B))
-        print("H1_T0_3A:1 "+str(H1_T0_3A & 0xff)+" H1_T0_3B:1 "+str(H1_T0_3B&0xff))
+        print("H1_T0_out:"+str(H1_T0_out)+"\n")
+
         
-        H_T_out = (buffer[1]<<8) | buffer[0]
         H_T_28 = i2cBus.read_byte_data(humidAddr,0x28)
         H_T_29 = i2cBus.read_byte_data(humidAddr,0x29)
-        H_T_out1 = (H_T_29<<8) | H_T_28
-        print("H_T_out:"+str(H_T_out) +" H_T_28:"+str(H_T_28)+" H_T_29:"+str(H_T_29)  )
-        print("H_T_out1:"+str(H_T_out1))
-        print("H_T_28:1 "+str(H_T_28 & 0xff)+"H_T_29:1 "+str(H_T_29 & 0xff))
+        H_T_out = (H_T_29<<8) | H_T_28
+        print("H_T_28:"+str(H_T_28)+" H_T_29:"+str(H_T_29))
+        print("H_T_out:"+str(H_T_out)+"\n")
         
-        tmp = (H_T_out - H0_T0_out) * (H1_rh - H0_rh)*10
-        humidity = (tmp/(H1_T0_out - H0_T0_out) + H0_rh*10)
-        print("humidity:" + str(humidity))
+        tmp = (H_T_out - H0_T0_out) * (H1_rh - H0_rh)
+        humidity = (tmp/(H1_T0_out - H0_T0_out) + H0_rh)
+        print("humidity:" + str(humidity)+"\n")
         
-        tmp1 = (H_T_out1 - H0_T0_out1) * (H1_rh1 - H0_rh1)*10
-        humidity1 = (tmp1/(H1_T0_out1 - H0_T0_out1) + H0_rh1*10)
         if(humidity>1000):
             humidity = 1000
 
         print("humidity:" + str(humidity))
-        print("humidity1:" + str(humidity1))
        
     def run(self):
         while True:
