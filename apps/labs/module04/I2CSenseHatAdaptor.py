@@ -35,7 +35,7 @@ class I2CSenseHatAdaptor(threading.Thread):
         i2cBus.write_byte_data(accelAddr, 0, 0)
         i2cBus.write_byte_data(magAddr, 0, 0)
         i2cBus.write_byte_data(pressAddr, 0, 0)
-        i2cBus.write_byte_data(humidAddr, 0, 0)
+        #i2cBus.write_byte_data(humidAddr, 0, 0)
         
     def displayHumidityData(self):
         #1.Read H0_rH and H1_rH coefficients
@@ -66,8 +66,9 @@ class I2CSenseHatAdaptor(threading.Thread):
         #Saturation condition
         if(humidity>100):
             humidity = 100
-
-        logging.info("humidity from i2c:" + str(humidity))
+        
+        return humidity
+        #logging.info("humidity from i2c:" + str(humidity))
 
     def displayTemperatureData(self):
         #1. Read from 0x32 & 0x33 registers the value of coefficients T0_degC_x8 and T1_degC_x8
@@ -100,7 +101,9 @@ class I2CSenseHatAdaptor(threading.Thread):
         # 6.Compute the Temperature value by linear interpolation
         tmp32 = ((T_OUT - T0_OUT)) * ((T1_degC - T0_degC));
         temperature = tmp32 /(T1_OUT - T0_OUT) + T0_degC;
-        logging.info("temperature from i2c:"+str(temperature))
+        
+        return temperature
+        #logging.info("temperature from i2c:"+str(temperature))
     
     #if data is negative integer, call this method        
     def checknegative(self,data):
@@ -117,6 +120,7 @@ class I2CSenseHatAdaptor(threading.Thread):
                 #self.displayAccelerometerData()
                 #self.displayMagnetometerData()
                 #self.displayPressureData()
-            self.displayTemperatureData()
-            self.displayHumidityData()
+            temp = self.displayTemperatureData()
+            humidity = self.displayHumidityData()
+            logging.info("humidity from i2c:" + str(humidity) + " temperature from i2c:"+str(temp))
             sleep(self.rateInSec)
