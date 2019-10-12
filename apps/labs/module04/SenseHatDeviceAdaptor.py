@@ -31,5 +31,5 @@ class SenseHatDeviceAdaptor(threading.Thread):
         while True:
             humidity = self.displayHumidity()
             temp = self.displayTemp()
-            logging.info("humidity from sensehat:" + str(humidity) + " temperature from sensehat:"+str(temp))
+            logging.info("humidity_sensehat:" + str(humidity) + " temp_sensehat:"+str(temp))
             sleep(5)

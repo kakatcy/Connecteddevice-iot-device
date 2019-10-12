@@ -122,5 +122,5 @@ class I2CSenseHatAdaptor(threading.Thread):
                 #self.displayPressureData()
             temp = self.displayTemperatureData()
             humidity = self.displayHumidityData()
-            logging.info("humidity from i2c:" + str(humidity) + " temperature from i2c:"+str(temp))
+            logging.info("humidity_i2c:" + str(humidity) + " temp_i2c:"+str(temp))
             sleep(self.rateInSec)
