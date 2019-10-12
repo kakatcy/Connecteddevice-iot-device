@@ -8,24 +8,24 @@ from time import sleep
 from sense_hat import SenseHat
 
 class SenseHatDeviceAdaptor(threading.Thread):
-
+    sense_hat = SenseHat()
 
     def __init__(self):
         super(SenseHatDeviceAdaptor,self).__init__()
         pass
     
+    #get humidity by using sensehat python package
     def displayHumidity(self):
-        sense_hat = SenseHat()
-        humidity = sense_hat.get_humidity()
-        print("sensehat humidity:" + str(humidity))
+        humidity = self.sense_hat.get_humidity()
+        print("humidity from sensehat:" + str(humidity))
     
+    #get temperature by using sensehat python package
     def displayTemp(self):
-        sense_hat = SenseHat()
-        temp = sense_hat.get_temperature_from_humidity()
-        print("sensehat temp:" + str(temp))
+        temp = self.sense_hat.get_temperature_from_humidity()
+        print("temperature from sensehat:" + str(temp))
         
     def run(self):
         while True:
-            #self.displayHumidity()
+            self.displayHumidity()
             self.displayTemp()
             sleep(5)

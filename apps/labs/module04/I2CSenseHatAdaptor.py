@@ -35,100 +35,81 @@ class I2CSenseHatAdaptor(threading.Thread):
         i2cBus.write_byte_data(accelAddr, 0, 0)
         i2cBus.write_byte_data(magAddr, 0, 0)
         i2cBus.write_byte_data(pressAddr, 0, 0)
-        #i2cBus.write_byte_data(humidAddr, 0, 0)
+        i2cBus.write_byte_data(humidAddr, 0, 0)
         
     def displayHumidityData(self):
+        #1.Read H0_rH and H1_rH coefficients
         H0_rh = i2cBus.read_byte_data(humidAddr,0x30)>>1
         H1_rh = i2cBus.read_byte_data(humidAddr,0x31)>>1
-        print(sys.getsizeof(H0_rh))
-        print(i2cBus.read_byte_data(humidAddr,0x30))
-        print(i2cBus.read_byte_data(humidAddr,0x31))
-        print("H0_rh:"+str(H0_rh))
-        print("H1_rh:"+str(H1_rh)+"\n")
         
+        #2.Read H0_T0_OUT
         H0_T0_36 = i2cBus.read_byte_data(humidAddr,0x36)
         H0_T0_37 = i2cBus.read_byte_data(humidAddr,0x37) 
         H0_T0_out = (H0_T0_37<<8) | H0_T0_36
-        print(sys.getsizeof(H0_T0_37))
-        print(sys.getsizeof(H0_T0_36))
-        print(str(H0_T0_37 & 0xffff))
-        print(str(H0_T0_36 & 0xffff))
-        print(sys.getsizeof(H0_T0_out))
-        print(str(H0_T0_out & 0xffffff))
-        print("H0_T0_36:"+str(H0_T0_36)+" H0_T0_37:"+str(H0_T0_37))
-        print("H0_T0_out:"+str(H0_T0_out)+"\n")
        
+        #3.Read H1_T0_OUT
         H1_T0_3A = i2cBus.read_byte_data(humidAddr,0x3A)
         H1_T0_3B = i2cBus.read_byte_data(humidAddr,0x3B)
         H1_T0_out = (H1_T0_3B<<8) | H1_T0_3A
         H1_T0_out = self.checknegative(H1_T0_out)
-        print(sys.getsizeof(H1_T0_3A))
-        print(sys.getsizeof(H1_T0_3B))
-        print(str(H1_T0_3A& 0xffff))
-        print(str(H1_T0_3B& 0xffff))
-        print(sys.getsizeof(H1_T0_out))
-        print(str(H1_T0_out& 0xffffff))
-        print("H1_T0_3A:"+str(H1_T0_3A)+" H1_T0_3B:"+str(H1_T0_3B))
-        print("H1_T0_out:"+str(H1_T0_out)+"\n")
-
         
+        #4.Read H_T_OUT
         H_T_28 = i2cBus.read_byte_data(humidAddr,0x28)
         H_T_29 = i2cBus.read_byte_data(humidAddr,0x29)
         H_T_out = (H_T_29<<8) | H_T_28
         H_T_out = self.checknegative(H_T_out)
-        print(sys.getsizeof(H_T_28))
-        print(sys.getsizeof(H_T_29))
-        print(str(H_T_28& 0xffff))
-        print(str(H_T_29& 0xffff))
-        print(sys.getsizeof(H_T_out))
-        print(str(H_T_out& 0xffffff))
-        print("H_T_28:"+str(H_T_28)+" H_T_29:"+str(H_T_29))
-        print("H_T_out:"+str(H_T_out)+"\n")
         
+        #5.Compute the RH [%] value by linear interpolation
         tmp = (H_T_out - H0_T0_out) * (H1_rh - H0_rh)
         humidity = (tmp/(H1_T0_out - H0_T0_out) + H0_rh)
-        print("humidity:" + str(humidity)+"\n")
         
-        if(humidity>1000):
-            humidity = 1000
+        #Saturation condition
+        if(humidity>100):
+            humidity = 100
 
-        print("humidity:" + str(humidity))
+        print("humidity from i2c:" + str(humidity))
+        logging.info("humidity from i2c:" + str(humidity) + "\n")
 
     def displayTemperatureData(self):
+        #1. Read from 0x32 & 0x33 registers the value of coefficients T0_degC_x8 and T1_degC_x8
         T0_degC_x8 = i2cBus.read_byte_data(humidAddr,0x32)
         T1_degC_x8 = i2cBus.read_byte_data(humidAddr,0x33)
+        #2. Read from 0x35 register the value of the MSB bits of T1_degC and T0_degC 
         T_degC_x8_H = i2cBus.read_byte_data(humidAddr,0x35)
         
+        #Calculate the T0_degC and T1_degC values
         T0_degC_x8_u16 = ((T_degC_x8_H & 0x03)<<8) | T0_degC_x8
         T1_degC_x8_u16 = ((T_degC_x8_H & 0x0C)<<6) | T1_degC_x8
-         
         T0_degC = T0_degC_x8_u16>>3
         T1_degC = T1_degC_x8_u16>>3
-         
+        
+        #3 Read from 0x3C & 0x3D registers the value of T0_OUT
         T0_OUT_L = i2cBus.read_byte_data(humidAddr,0x3C)
         T0_OUT_H = i2cBus.read_byte_data(humidAddr,0x3D)
         T0_OUT = (T0_OUT_H<<8)|T0_OUT_L
         
+        #4.Read from 0x3E & 0x3F registers the value of T1_OUT
         T1_OUT_L = i2cBus.read_byte_data(humidAddr,0x3E)
         T1_OUT_H = i2cBus.read_byte_data(humidAddr,0x3F)
         T1_OUT = (T1_OUT_H<<8)|T1_OUT_L
         
+        #5.Read from 0x2A & 0x2B registers the value T_OUT (ADC_OUT).
         T_OUT_L = i2cBus.read_byte_data(humidAddr,0x2A)
         T_OUT_H = i2cBus.read_byte_data(humidAddr,0x2B)
         T_OUT = (T_OUT_H<<8)|T_OUT_L
         
-        tmp32 = ((T_OUT - T0_OUT)) * ((T1_degC - T0_degC)*10);
-        temperature = tmp32 /(T1_OUT - T0_OUT) + T0_degC*10;
-        print("temp:"+str(temperature))
-            
+        # 6.Compute the Temperature value by linear interpolation
+        tmp32 = ((T_OUT - T0_OUT)) * ((T1_degC - T0_degC));
+        temperature = tmp32 /(T1_OUT - T0_OUT) + T0_degC;
+        print("temperature from i2c:"+str(temperature))
+        logging.info("temperature from i2c:"+str(temperature) + "\n")
+    
+    #if data is negative integer, call this method        
     def checknegative(self,data):
-        if(data>=0x80):
+        if(data>=0x8000):
             data=data-1
-            print("negative:"+str(data))
             data=data^0xffff
-            print("negative:"+str(data))
             data = 0-data
-            print("negative:"+str(data))
         return data
        
     def run(self):
@@ -139,5 +120,5 @@ class I2CSenseHatAdaptor(threading.Thread):
                 #self.displayMagnetometerData()
                 #self.displayPressureData()
             self.displayTemperatureData()
-            #self.displayHumidityData()
+            self.displayHumidityData()
             sleep(self.rateInSec)
