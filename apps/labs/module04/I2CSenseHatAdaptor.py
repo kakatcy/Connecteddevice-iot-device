@@ -57,6 +57,10 @@ class I2CSenseHatAdaptor(threading.Thread):
         H1_T0_3A = i2cBus.read_byte_data(humidAddr,0x3A)
         H1_T0_3B = i2cBus.read_byte_data(humidAddr,0x3B)
         H1_T0_out = (H1_T0_3B<<8) | H1_T0_3A
+        print(sys.getsizeof(H1_T0_3A))
+        print(sys.getsizeof(H1_T0_3B))
+        print(str(H1_T0_3A& 0xffff))
+        print(str(H1_T0_3B& 0xffff))
         print("H1_T0_3A:"+str(H1_T0_3A)+" H1_T0_3B:"+str(H1_T0_3B))
         print("H1_T0_out:"+str(H1_T0_out)+"\n")
 
@@ -64,6 +68,10 @@ class I2CSenseHatAdaptor(threading.Thread):
         H_T_28 = i2cBus.read_byte_data(humidAddr,0x28)
         H_T_29 = i2cBus.read_byte_data(humidAddr,0x29)
         H_T_out = (H_T_29<<8) | H_T_28
+        print(sys.getsizeof(H_T_28))
+        print(sys.getsizeof(H_T_29))
+        print(str(H_T_28& 0xffff))
+        print(str(H_T_29& 0xffff))
         print("H_T_28:"+str(H_T_28)+" H_T_29:"+str(H_T_29))
         print("H_T_out:"+str(H_T_out)+"\n")
         
