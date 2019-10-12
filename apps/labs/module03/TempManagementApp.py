@@ -9,4 +9,6 @@ import logging
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
 logging.info("Module03 app start")
 temp = TempSensorAdaptor()
-temp.run()
+#temp.daemon=True
+temp.start()
+#temp.run()

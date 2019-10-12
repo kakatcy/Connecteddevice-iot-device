@@ -22,6 +22,7 @@ class TempSensorAdaptor(threading.Thread):
     threshold = 2
     
     def __init__(self):
+        super(TempSensorAdaptor,self).__init__()
         self.config = ConfigUtil.ConfigUtil('../../../config/ConnectedDevicesConfig.props')
         self.config.loadConfig()
         logging.info('Configuration data...\n' + str(self.config))
