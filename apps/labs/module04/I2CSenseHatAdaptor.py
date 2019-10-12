@@ -54,6 +54,7 @@ class I2CSenseHatAdaptor(threading.Thread):
         
         print("H0_T0_out:"+str(H0_T0_out)+" H0_T0_out1:"+str(H0_T0_out1))
         print("H0_T0_36:"+str(H0_T0_36)+" H0_T0_37:"+str(H0_T0_37))
+        print("H0_T0_36:1"+str(H0_T0_36 & 0xff)+" H0_T0_37:1"+str(H0_T0_37 & 0xff))
         
         buffer_h1t0out = i2cBus.read_i2c_block_data(humidAddr,0x3A,2)
         H1_T0_out = (buffer_h1t0out[1]<<8) | buffer_h1t0out[0]
@@ -62,6 +63,7 @@ class I2CSenseHatAdaptor(threading.Thread):
         H1_T0_out1 = (H1_T0_3B<<8) | H1_T0_3A
         print("H1_T0_out:"+str(H1_T0_out) + " H1_T0_out1:"+str(H1_T0_out1))
         print("H1_T0_3A:"+str(H1_T0_3A)+" H1_T0_3B:"+str(H1_T0_3B))
+        print("H1_T0_3A:1"+str(H1_T0_3A & 0xff)+" H1_T0_3B:1"+str(H1_T0_3B&0xff))
         
         H_T_out = (buffer[1]<<8) | buffer[0]
         H_T_28 = i2cBus.read_byte_data(humidAddr,0x28)
@@ -69,6 +71,7 @@ class I2CSenseHatAdaptor(threading.Thread):
         H_T_out1 = (H_T_29<<8) | H_T_28
         print("H_T_out:"+str(H_T_out) +" H_T_28:"+str(H_T_28)+" H_T_29:"+str(H_T_29)  )
         print("H_T_out1:"+str(H_T_out1))
+        print("H_T_28:1"+str(H_T_28 & 0xff)+"H_T_29:1"+str(H_T_29 & 0xff))
         
         tmp = (H_T_out - H0_T0_out) * (H1_rh - H0_rh)*10
         humidity = (tmp/(H1_T0_out - H0_T0_out) + H0_rh*10)
