@@ -29,7 +29,7 @@ class SenseHatDeviceAdaptor(threading.Thread):
         
     def run(self):
         while True:
-            humidity = self.displayHumidity()
-            temp = self.displayTemp()
+            humidity = round(self.displayHumidity(),2)
+            temp = round(self.displayTemp(),2)
             logging.info("humidity_sensehat:" + str(humidity) + " temp_sensehat:"+str(temp))
             sleep(5)
