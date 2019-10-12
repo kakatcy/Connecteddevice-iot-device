@@ -97,7 +97,9 @@ class I2CSenseHatAdaptor(threading.Thread):
     def checknegative(self,data):
         if(data>=0x80):
             data=data-1
+            print(data)
             data=data^0xff
+            print(data)
             data = 0-data
         return data
        
