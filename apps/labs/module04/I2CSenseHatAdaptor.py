@@ -41,6 +41,8 @@ class I2CSenseHatAdaptor(threading.Thread):
         H0_rh = i2cBus.read_byte_data(humidAddr,0x30)>>1
         H1_rh = i2cBus.read_byte_data(humidAddr,0x31)>>1
         print(sys.getsizeof(H0_rh))
+        print(i2cBus.read_byte_data(humidAddr,0x30))
+        print(i2cBus.read_byte_data(humidAddr,0x31))
         print("H0_rh:"+str(H0_rh))
         print("H1_rh:"+str(H1_rh)+"\n")
         
