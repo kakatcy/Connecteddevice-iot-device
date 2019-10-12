@@ -61,6 +61,7 @@ class I2CSenseHatAdaptor(threading.Thread):
         H1_T0_3A = i2cBus.read_byte_data(humidAddr,0x3A)
         H1_T0_3B = i2cBus.read_byte_data(humidAddr,0x3B)
         H1_T0_out = (H1_T0_3B<<8) | H1_T0_3A
+        H1_T0_out = self.checknegative(H1_T0_out)
         print(sys.getsizeof(H1_T0_3A))
         print(sys.getsizeof(H1_T0_3B))
         print(str(H1_T0_3A& 0xffff))
@@ -74,6 +75,7 @@ class I2CSenseHatAdaptor(threading.Thread):
         H_T_28 = i2cBus.read_byte_data(humidAddr,0x28)
         H_T_29 = i2cBus.read_byte_data(humidAddr,0x29)
         H_T_out = (H_T_29<<8) | H_T_28
+        H1_T0_out = self.checknegative(H_T_out)
         print(sys.getsizeof(H_T_28))
         print(sys.getsizeof(H_T_29))
         print(str(H_T_28& 0xffff))
@@ -91,6 +93,13 @@ class I2CSenseHatAdaptor(threading.Thread):
             humidity = 1000
 
         print("humidity:" + str(humidity))
+    
+    def checknegative(self,data):
+        if(data>=0x80):
+            data=data-1
+            data=data^0xff
+            data = 0-data
+        return data
        
     def run(self):
         while True:
