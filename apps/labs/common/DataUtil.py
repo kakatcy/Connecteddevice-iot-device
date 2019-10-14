@@ -21,8 +21,20 @@ class DataUtil():
     def toJsonFromSensorData(self, sensordata):
         pass
     
-    def toSensorDataFromJson(self, jsonstring):
-        pass
+    def toSensorDataFromJson(self, jsonData):
+        sdDict = json.loads(jsonData)
+        #print(" decode [pre]  --> " + str(sdDict))
+        sd= SensorData.SensorData()
+        sd.name= sdDict['name']
+        sd.timeStamp= sdDict['timeStamp']
+        sd.avgValue= sdDict['avgValue']
+        sd.minValue= sdDict['minValue']
+        sd.maxValue= sdDict['maxValue']
+        sd.curValue= sdDict['curValue']
+        sd.totValue= sdDict['totValue']
+        sd.sampleCount = sdDict['sampleCount']
+        #print(" decode [post] --> " + str(sd))
+        return sd
     
     def toSensorDataFromJsonFile(self,filename,path):
         pass
