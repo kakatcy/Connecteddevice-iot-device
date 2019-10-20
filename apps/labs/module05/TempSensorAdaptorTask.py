@@ -16,57 +16,49 @@ from labbenchstudios.common import ConfigConst
 from labbenchstudios.common import ConfigUtil
 from labs.common.ActuatorData import ActuatorData
 from labs.module03.TempActuatorEmulator import TempActuatorEmulator
+from labs.common.DataUtil import DataUtil
 
 
-class TempSensorAdaptor(threading.Thread):
+class TempSensorAdaptorTask(threading.Thread):
     threshold = 2
     
     def __init__(self):
-        super(TempSensorAdaptor,self).__init__()
+        super(TempSensorAdaptorTask,self).__init__()
         self.config = ConfigUtil.ConfigUtil('../../../config/ConnectedDevicesConfig.props')
         self.config.loadConfig()
         logging.info('Configuration data...\n' + str(self.config))
     
     def run(self):
         sensordata = SensorData.SensorData()
-    #    senseHatLedActivator = SenseHatLedActivator.SenseHatLedActivator()
-        senseledThread = SenseHatLedActivator.SenseHatLedActivator()
-        senseledThread.start()
-        #senseHatLedActivator.run()
         
         while True:
             sense = SenseHat()
-            temperature = sense.get_temperature()
+            #generate new temperature data
+            temperature = sense.get_temperature() 
             sensordata.addValue(temperature)
+            #add into log
+            logging.info("\n---------------------------------\nNew sensor readings:\n"+
+                         "name="+sensordata.name + ",timeStamp=" +sensordata.timeStamp+
+                         ",minValue=" + str(sensordata.minValue)+ ",aveValue="+ str(sensordata.avgValue)+
+                         ",maxValue=" + str(sensordata.maxValue)+ ",curValue=" + str(sensordata.curValue)+
+                         ",totValue=" + str(sensordata.totValue)+ ",sampleCount=" +str(sensordata.sampleCount))
+            
+            #convert to json format from python object
+            datautil = DataUtil()
+            jsondata = datautil.toJsonFromSensorData(sensordata)
+            if(abs(sensordata.curValue - sensordata.avgValue)>2):
+                logging.info("\nCurrent temp exceeds average by >2. Converting data...\n"+
+                             "JSON data:\n" + jsondata)
             
             #smtp module
-            if(abs(sensordata.getValue()-sensordata.getAvgValue())>=self.threshold):
-                logging.info('\n  Current temp exceeds average by > ' + str(self.threshold) + '. Triggering alert...')
-                smtpClientConnector = SmtpClientConnector.SmtpClientConnector()
-                smtpClientConnector.publishMessage("Excessive Temp", sensordata)
-                
-            nomialtemp = self.config.getProperty(ConfigConst.CONSTRAINED_DEVICE,ConfigConst.NOMINAL_TEMP_KEY)
+            smtpClientConnector = SmtpClientConnector.SmtpClientConnector()
+            smtpClientConnector.publishMessage("Temperature", jsondata)
+            # logging.info("send email successfully")
             
-            #senseHat Led module
-            actuatordata = ActuatorData()
-            if(sensordata.getValue != nomialtemp):
-                logging.info('\n temperature is different from nomialtemp')   
-                actuatordata.command = 1
-                actuatordata.statusCode = 1
-                actuatordata.errCode = 0
-                actuatordata.val = temperature
-                actuatordata.stateData = temperature - float(nomialtemp)
-                TempActuatorEmulator().processMessage(actuatordata, senseledThread)
-            else:
-                logging.info('\n temperature is equal to nomialtemp')   
-                actuatordata.command = 1
-                actuatordata.statusCode = 0
-                actuatordata.errCode = 0
-                actuatordata.val = temperature
+            #write json dta to filesystem
+            of = open("tempData.json", "w+")
+            of.write(jsondata)
+            of.close()
+            # logging.info("write data as JSON file to filesystem successfully")
+            
             time.sleep(10)
-            
-    def sendEmail(self):
-        pass
-    
-    def writeFileSystem(self):
-        pass

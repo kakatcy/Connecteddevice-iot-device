@@ -50,10 +50,10 @@ class ConfigUtil:
      
     """
     def loadConfig(self):
-        print(str(os.listdir(self.configPath)))
+        #print(str(os.listdir(self.configPath)))
         
         if (os.path.exists(self.configPath)):
-            print("Loading config: " + self.configFile)
+            #print("Loading config: " + self.configFile)
             self.configData.read(self.configFile)
             self.isLoaded = True
         else:
@@ -61,7 +61,7 @@ class ConfigUtil:
             self.configData.read(self.configFile)
             self.isLoaded = True
         
-        print("Config: " + str(self.configData.sections()))
+        #print("Config: " + str(self.configData.sections()))
 
     """
     Returns the entire configuration object. If the config file hasn't

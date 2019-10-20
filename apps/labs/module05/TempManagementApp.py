@@ -3,12 +3,11 @@ Created on Sep 27, 2019
 
 @author: cytang
 '''
-from labs.module03.TempSensorAdaptor import TempSensorAdaptor
 import logging
+from labs.module05.TempSensorAdaptorTask import TempSensorAdaptorTask
 
 logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
-logging.info("Module03 app start")
-temp = TempSensorAdaptor()
+logging.info("Module05 app start")
+temp = TempSensorAdaptorTask()
 #temp.daemon=True
 temp.start()
-#temp.run()

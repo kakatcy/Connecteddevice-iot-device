@@ -15,7 +15,7 @@ class SmtpClientConnector():
     def __init__(self):
         self.config = ConfigUtil.ConfigUtil('../../../config/ConnectedDevicesConfig.props')
         self.config.loadConfig()
-        logging.info('Configuration data...\n' + str(self.config))
+    #    logging.info('Configuration data...\n' + str(self.config))
      
     def publishMessage(self, topic, data):
         host= self.config.getProperty(ConfigConst.SMTP_CLOUD_SECTION, ConfigConst.HOST_KEY)
