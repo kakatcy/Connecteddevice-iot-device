@@ -22,10 +22,13 @@ class TempSensorCloudPublisherApp:
         ubidotsClientConnector = UbidotsClientConnector()
         ubidotsClientConnector.connect()
         while True:
-            temperature = random.uniform(0.0,50.0)
-            print(temperature)
+            #generate random temperature 
+            temperature = random.uniform(0.0,45.0)
+            logging.info("current temperature:" + str(temperature))
+            #publish the temperature to ubidots by using ubidots API
             ubidotsClientConnector.publish(topic, 0, temperature) 
-            sleep(10) 
+            logging.info("published successfully")
+            sleep(5) 
 
 if __name__ == '__main__':
     logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)

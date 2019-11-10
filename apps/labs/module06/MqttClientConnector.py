@@ -14,7 +14,9 @@ PORT = 8883
 
 class MqttClientConnector:
     def __init__(self,client, useTLS, rootCertPath):
+        #using ssl to connect ubidots
         if useTLS == True:
+            #set username and password
             client.username_pw_set("BBFF-B7HsNg1Sv3UESmoikX8oyyNxyx4jts","")
             client.tls_set(ca_certs=rootCertPath, certfile=None,
                            keyfile = None, cert_reqs = ssl.CERT_REQUIRED, 
@@ -25,12 +27,12 @@ class MqttClientConnector:
     #connect to the broker
     def connect(self,client):
         logging.info("connecting")
-        print("host:"+HOST)
-     #   print("port:"+PORT)
         client.connect(HOST, PORT)
+        logging.info("connected successfully")
     
     def publish(self,client,topicName,qos,payload):
         client.publishMessage(topicName,payload)
+        logging.info("data have published")
         
     #subscribe topic from broker
     def subscribeToTopic(self,client,topicName):

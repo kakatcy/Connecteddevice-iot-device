@@ -16,8 +16,6 @@ from labs.common.SensorData import SensorData
 from labs.common.DataUtil import DataUtil
 import random
 
-HOST = "localhost"
-PORT = 1883
 rootCertPath = "/Users/cytang/program/connected devices/ubidots_cert.pem"
 topic = "/v1.6/devices/tcydevice/TempSensor"
 
@@ -33,18 +31,13 @@ class TempSensorPublisherApp:
         #connect to the broker
         mqttClientConnector.connect(client)
         while True:
-            temperature = random.uniform(0.0,50.0)
-            print(temperature)
+            #generate temperature 
+            temperature = random.uniform(0.0,45.0)
+            logging.info("current temperature:" + str(temperature))
+            #publish the current temperature to ubidots
             client.publish(topic, temperature, 1, True) 
-            sleep(10) 
-        #client.loop_start()
-        
-        #subscribe topic from the broker
-        #   mqttClientConnector.subscribeToTopic(client,"test")
-     
-        #   sleep(5)
-        #mqttClientConnector.disconnect(client)
-        #client.loop_stop()
+            logging.info("published successfully")
+            sleep(5) 
 
     def on_connect(self, client, userdata, flags, rc):
         logging.info("Connected with result code "+str(rc))
@@ -66,16 +59,4 @@ if __name__ == '__main__':
     logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
     tempSensorPublisherApp = TempSensorPublisherApp()
     tempSensorPublisherApp.client_pub()    
-    #if(mqttSubClientTestApp.json!=None):
     
-    '''
-    #convert the jsondata to sensedata object
-    dataUtil = DataUtil()
-    #print("json\n"+str(mqttSubClientTestApp.json))
-    sensordata = dataUtil.toSensorDataFromJson(tempActuatorSubscriberApp.json)
-    logging.info("sensordata converted from json:" + str(sensordata.getAvgValue()))
-    
-    #convert the sensedata object to jsondata again and log the third jsondata
-    finaljson = dataUtil.toJsonFromSensorData(sensordata)
-    logging.info("the third json:\n" + finaljson)
-    '''
