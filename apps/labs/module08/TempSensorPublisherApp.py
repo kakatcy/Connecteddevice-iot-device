@@ -3,11 +3,6 @@ Created on Nov 9, 2019
 
 @author: cytang
 '''
-'''
-Created on Nov 9, 2019
-
-@author: cytang
-'''
 import paho.mqtt.client as mqtt
 import logging
 from time import sleep
