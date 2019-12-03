@@ -14,6 +14,7 @@ from time import sleep
 from labs.module10.UbidotsConnector import UbidotsConnector
 from sense_hat import SenseHat
 
+
 rootCertPath = "/Users/cytang/program/connected devices/ubidots_cert.pem"
 topicTemp = "/v1.6/devices/finaldevice/Temperature"
 topicHumidity = "/v1.6/devices/finaldevice/Humidity"
