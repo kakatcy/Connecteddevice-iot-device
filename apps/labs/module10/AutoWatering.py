@@ -32,5 +32,5 @@ class AutoWatering:
             logging.info("current humidity:" + str(humidity))
             ubidotsConnector.publishHumidity(topicHumidity, 0, humidity)
             
-            logging.info("published successfully")
+            logging.info("published humidity successfully")
             sleep(60) 

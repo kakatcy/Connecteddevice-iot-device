@@ -12,6 +12,8 @@ class SmartHomeAdaptor():
     def __init__(self):
         autoTemperature = AutoTemperature()
         autoTemperature.client_pub()
+        '''
         sleep(1)
         autoWatering = AutoWatering()
         autoWatering.client_pub()
+        '''

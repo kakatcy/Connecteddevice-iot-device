@@ -31,6 +31,11 @@ class AutoTemperature:
             logging.info("current temperature:" + str(temperature))
             #publish the temperature to ubidots by using ubidots API
             ubidotsConnector.publishTemp(topicTemp, 0, temperature)
+            logging.info("published temperature successfully")
             
-            logging.info("published successfully")
+            #get humidity 
+            humidity = sense_hat.get_humidity()
+            logging.info("current humidity:" + str(humidity))
+            ubidotsConnector.publishHumidity(topicHumidity, 0, humidity)
+            logging.info("published humidity successfully")
             sleep(60) 
