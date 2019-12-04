@@ -10,7 +10,7 @@ from labs.module06.MqttClientConnector import MqttClientConnector
 from labs.module10.UbidotsConnector import UbidotsConnector
 from sense_hat import SenseHat
 
-rootCertPath = "/Users/cytang/program/connected devices/ubidots_cert.pem"
+rootCertPath = "ubidots_cert.pem"
 topicTemp = "/v1.6/devices/finaldevice/Temperature"
 topicHumidity = "/v1.6/devices/finaldevice/Humidity" 
 
@@ -24,7 +24,7 @@ class SensorDataPublisher:
         ubidotsConnector.connect()
         
         #MQTT
-        client = mqtt.Client("pub_py")
+        client = mqtt.Client("pub_py") 
         mqttClientConnector = MqttClientConnector(client,True,rootCertPath)
         #set the callback methods
         client.on_connect = self.on_connect
