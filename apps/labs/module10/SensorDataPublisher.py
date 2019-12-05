@@ -37,6 +37,7 @@ class SensorDataPublisher:
         client.on_disconnect = self.on_disconnect
         #connect to the broker
         mqttClientConnector.connect(client)
+        self.connected_flag=1
         while True:
             if self.connected_flag== 0:
                 mqttClientConnector.connect(client)
