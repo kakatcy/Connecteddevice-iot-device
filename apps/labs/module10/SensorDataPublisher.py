@@ -17,6 +17,9 @@ topicHumidity = "/v1.6/devices/finaldevice/Humidity"
 #collect the temperature data
 class SensorDataPublisher:
     json = None
+    client = None
+    mqttClientConnector = None 
+    
     def client_pub(self):
         sense_hat = SenseHat()
         #ubidots
@@ -26,6 +29,7 @@ class SensorDataPublisher:
         #MQTT
         client = mqtt.Client("pub_py") 
         mqttClientConnector = MqttClientConnector(client,True,rootCertPath)
+        
         #set the callback methods
         client.on_connect = self.on_connect
         client.on_message = self.on_message
@@ -53,10 +57,11 @@ class SensorDataPublisher:
 
     def on_connect(self, client, userdata, flags, rc):
         logging.info("Connected with result code "+str(rc))
-        client.subscribe("test",qos=2)
+        #client.subscribe("test",qos=1)
     
     def on_disconnect(self, client, userdata, rc):
         logging.info("disconnecting reason "+ str(rc))
+        self.mqttClientConnector.connect(client)        
 
     def on_message(self, client, userdata, msg):
         #log the jsondata that the subsriber received
