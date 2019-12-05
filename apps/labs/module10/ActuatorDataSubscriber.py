@@ -5,8 +5,9 @@ Created on Dec 1, 2019
 '''
 import paho.mqtt.client as mqtt
 import logging
+from time import sleep
+from sense_hat import SenseHat
 from labs.module06.MqttClientConnector import MqttClientConnector
-from labs.module03.SenseHatLedActivator import SenseHatLedActivator
 from labs.module02 import SmtpClientConnector
 
 #rootCertPath = "/home/pi/workspace/iot-device/apps/labs/module10/ubidots_cert.pem"
@@ -45,9 +46,13 @@ class ActuatorDataSubscriber:
         logging.info("the :\n" +str(msg.payload.decode("utf-8")))    
         logging.info("message topic="+str(msg.topic))
         logging.info("message qos="+str(msg.qos))
-        logging.info("message retain flag="+str(msg.retain))    
+        logging.info("message retain flag="+str(msg.retain)) 
         smtpClientConnector = SmtpClientConnector.SmtpClientConnector()
         smtpClientConnector.publishMessage("autoset airconditioner", str(msg.payload.decode("utf-8")))
+        senseHat = SenseHat()
+        senseHat.show_message(str(msg.payload.decode("utf-8")))
+        sleep(5)
+        senseHat.clear()
 
 if __name__ == '__main__':
     logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)

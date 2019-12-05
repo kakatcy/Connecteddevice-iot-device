@@ -61,7 +61,7 @@ class SensorDataPublisher:
     
     def on_disconnect(self, client, userdata, rc):
         logging.info("disconnecting reason "+ str(rc))
-        self.mqttClientConnector.connect(client)        
+        self.mqttClientConnector.connect(self.client)        
 
     def on_message(self, client, userdata, msg):
         #log the jsondata that the subsriber received
