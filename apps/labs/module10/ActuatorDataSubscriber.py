@@ -8,24 +8,28 @@ import logging
 from labs.module06.MqttClientConnector import MqttClientConnector
 from labs.module03.SenseHatLedActivator import SenseHatLedActivator
 
-rootCertPath = "/Users/cytang/program/connected devices/ubidots_cert.pem"
-topicAirconditioner = "/v1.6/devices/finaldevice/AirconditionerSetting"
-topicWatering = "/v1.6/devices/finaldevice/Watering"
+rootCertPath = "/home/pi/workspace/iot-device/apps/labs/module10/ubidots_cert.pem"
+#topicAirconditioner = "/v1.6/devices/finaldevice/AirconditionerSetting"
+topicAirconditioner = "/v1.6/devices/finaldevice/temperature/lv"
+topicWatering = "/v1.6/devices/finalDevice/Watering"
 
 class ActuatorDataSubscriber:
-    json = None
     def client_sub(self):
         client = mqtt.Client("sub_py")
         mqttClientConnector = MqttClientConnector(client,True,rootCertPath)
-        #set the callback methods
-        client.on_connect = self.on_connect
-        client.on_message = self.on_message
-        client.on_disconnect = self.on_disconnect
+       
         #connect to the broker
         mqttClientConnector.connect(client)
 
         #subscribe topic from the broker
-        mqttClientConnector.subscribeToTopic(client,topicAirconditioner)
+        #mqttClientConnector.subscribeToTopic(client,topicAirconditioner)
+        #client.subscribe(topicAirconditioner, 1)
+        
+        #set the callback methods
+        client.on_connect = self.on_connect
+        client.on_message = self.on_message
+        client.on_disconnect = self.on_disconnect
+        
         client.loop_forever()
 
     def on_connect(self, client, userdata, flags, rc):
@@ -40,7 +44,7 @@ class ActuatorDataSubscriber:
         logging.info("message topic="+str(msg.topic))
         logging.info("message qos="+str(msg.qos))
         logging.info("message retain flag="+str(msg.retain))    
-        self.json = str(msg.payload.decode("utf-8"))
+        #self.json = str(msg.payload.decode("utf-8"))
 
 if __name__ == '__main__':
     logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)

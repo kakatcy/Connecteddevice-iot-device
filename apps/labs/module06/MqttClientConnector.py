@@ -37,7 +37,7 @@ class MqttClientConnector:
     #subscribe topic from broker
     def subscribeToTopic(self,client,topicName):
         logging.info("subscribing")
-        client.subscribe(topicName,2)
+        client.subscribe(topicName,0)
         sleep(10)
         client.unsubscribe(topicName)
     

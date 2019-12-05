@@ -10,8 +10,8 @@ from labs.module06.MqttClientConnector import MqttClientConnector
 from labs.module10.UbidotsConnector import UbidotsConnector
 from sense_hat import SenseHat
 
-rootCertPath = "ubidots_cert.pem"
-topicTemp = "/v1.6/devices/finaldevice/Temperature"
+rootCertPath = "/home/pi/workspace/iot-device/apps/labs/module10/ubidots_cert.pem"
+topicTemp = "/v1.6/devices/finaldevice/temperature"
 topicHumidity = "/v1.6/devices/finaldevice/Humidity" 
 
 #collect the temperature data
