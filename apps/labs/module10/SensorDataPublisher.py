@@ -41,13 +41,13 @@ class SensorDataPublisher:
         mqttClientConnector.connect(client)
         self.connected_flag=1
         while True:
-            '''
+            
             if self.connected_flag== 0:
                 clientId = ''.join(random.choice(string.ascii_letters + string.digits,5))
                 client = mqtt.Client(clientId) 
                 mqttClientConnector = MqttClientConnector(client,True,rootCertPath)
                 mqttClientConnector.connect(client)
-            '''
+            
             #get temperature 
             temperature = sense_hat.get_temperature_from_humidity()
             logging.info("current temperature:" + str(temperature))
