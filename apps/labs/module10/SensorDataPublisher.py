@@ -9,6 +9,8 @@ from time import sleep
 from labs.module06.MqttClientConnector import MqttClientConnector
 from labs.module10.UbidotsConnector import UbidotsConnector
 from sense_hat import SenseHat
+import random
+import string
 
 rootCertPath = "/home/pi/workspace/iot-device/apps/labs/module10/ubidots_cert.pem"
 topicTemp = "/v1.6/devices/finaldevice/temperature"
@@ -40,6 +42,9 @@ class SensorDataPublisher:
         self.connected_flag=1
         while True:
             if self.connected_flag== 0:
+                clientId = ''.join(random.choice(string.ascii_letters + string.digits,5))
+                client = mqtt.Client(clientId) 
+                mqttClientConnector = MqttClientConnector(client,True,rootCertPath)
                 mqttClientConnector.connect(client)
             #get temperature 
             temperature = sense_hat.get_temperature_from_humidity()
@@ -57,7 +62,7 @@ class SensorDataPublisher:
             logging.info("current humidity:" + str(humidity))
             ubidotsConnector.publishHumidity(topicHumidity, 0, humidity)
             logging.info("published humidity successfully")
-            sleep(60) 
+            sleep(60)
 
     def on_connect(self, client, userdata, flags, rc):
         logging.info("Connected with result code "+str(rc))
