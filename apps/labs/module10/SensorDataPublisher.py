@@ -40,10 +40,10 @@ class SensorDataPublisher:
         #connect to the broker
         mqttClientConnector.connect(client)
         self.connected_flag=1
-        while True:
-            
+        while True: 
             if self.connected_flag== 0:
                 clientId = ''.join(random.choice(string.ascii_letters + string.digits,5))
+                logging.info("new client id" + clientId)
                 client = mqtt.Client(clientId) 
                 mqttClientConnector = MqttClientConnector(client,True,rootCertPath)
                 mqttClientConnector.connect(client)
@@ -76,7 +76,8 @@ class SensorDataPublisher:
         logging.info("disconnecting reason "+ str(rc))
         self.connected_flag=0
         clientId = ''.join(random.choice(string.ascii_letters + string.digits,5))
-        client = mqtt.Client(clientId) 
+        client = mqtt.Client(clientId)
+        logging.info("new client id1111" + clientId) 
         mqttClientConnector = MqttClientConnector(client,True,rootCertPath)
         mqttClientConnector.connect(client)
         #self.mqttClientConnector.connect(self.client)        
