@@ -50,7 +50,7 @@ class SensorDataPublisher:
             
             #publish the current temperature to ubidots by mqtt
             client.publish(topicTemp, temperature, 1, True) 
-            logging.info("published temperature successfully")
+            logging.info("published temperature successfully" + str(self.connected_flag))
             
             #get humidity 
             humidity = sense_hat.get_humidity()
