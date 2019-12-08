@@ -28,7 +28,7 @@ class BasicResource(Resource):
         if air != self.airconditioner:
             self.airconditioner = air
             senseHat = SenseHat()
-            senseHat.show_message(air)
+            senseHat.show_message(payloads[0])
             
         if water != self.watering:
             self.watering = water
