@@ -8,6 +8,7 @@ class CoAPServer(CoAP):
 
 def main():
     server = CoAPServer("0.0.0.0", 5683)
+    '''
     try:
         server.listen(10)
     except KeyboardInterrupt:
@@ -16,6 +17,6 @@ def main():
         server.close()
         print("Exiting...")
         #print "Exiting..."
-        
+    '''    
 if __name__ == '__main__':
     main()
