@@ -1,5 +1,5 @@
 from coapthon.server.coap import CoAP
-from project import BasicResource
+from project.BasicResource import BasicResource
 
 class CoAPServer(CoAP):
     def __init__(self, host, port):
