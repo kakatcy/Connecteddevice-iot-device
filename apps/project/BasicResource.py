@@ -16,6 +16,7 @@ class BasicResource(Resource):
 
     def render_PUT(self, request):
         self.payload = request.payload
+        print(self.payload)
         return self
 
     def render_POST(self, request):
