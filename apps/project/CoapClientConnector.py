@@ -24,6 +24,7 @@ class CoapClientConnector:
             #generated a random temperture data and created a sensordata object
             #temperature = random.uniform(0.0,30.0)  
             #humidity = random.uniform(30.0,40.0)
+            #
             temperature = sense_hat.get_temperature_from_humidity()
             humidity = sense_hat.get_humidity()
             #sensordata.addValue(temperature)
