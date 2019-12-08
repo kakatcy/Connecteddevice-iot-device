@@ -9,8 +9,8 @@ from labs.module02 import SmtpClientConnector
 
 
 class BasicResource(Resource):
-    airconditioner = 0
-    watering = 0
+    airconditioner = 0.0
+    watering = 0.0
     def __init__(self, name="BasicResource", coap_server=None):
         super(BasicResource, self).__init__(name, coap_server, visible=True,
                                             observable=True, allow_children=True)
@@ -22,8 +22,8 @@ class BasicResource(Resource):
     def render_PUT(self, request):
         self.payload = request.payload
         payloads = self.payload.split(',')
-        air = payloads[0]
-        water = payloads[1]
+        air = float(payloads[0])
+        water = float(payloads[1])
         
         if air != self.airconditioner:
             self.airconditioner = air
