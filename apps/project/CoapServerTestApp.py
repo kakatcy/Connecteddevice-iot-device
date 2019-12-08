@@ -9,7 +9,7 @@ from project import SourceHandler
 class CoAPServer(CoAP):
     def __init__(self, host, port):
         CoAP.__init__(self, (host, port))
-        self.add_resource(SourceHandler)
+        self.add_resource('./',SourceHandler())
         
 def main():
     server = CoAPServer("0.0.0.0", 5683)
