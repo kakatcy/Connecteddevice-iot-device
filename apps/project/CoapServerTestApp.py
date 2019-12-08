@@ -13,6 +13,7 @@ class CoAPServer(CoAP):
         
 def main():
     server = CoAPServer("0.0.0.0", 5683)
+    print("server is running")
     #try:
         #server.listen(10)
         
