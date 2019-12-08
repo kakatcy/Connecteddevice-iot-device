@@ -4,7 +4,7 @@ Created on Dec 8, 2019
 @author: cytang
 '''
 from coapthon.server.coap import CoAP
-from project import SourceHandler
+from project.SourceHandler import SourceHandler
 
 class CoAPServer(CoAP):
     def __init__(self, host, port):
