@@ -5,7 +5,7 @@ Created on Dec 8, 2019
 '''
 from coapthon.resources.resource import Resource
 from sense_hat import SenseHat
-from labs.module02 import SmtpClientConnector
+from project import SmtpClientConnector
 
 
 class BasicResource(Resource):
