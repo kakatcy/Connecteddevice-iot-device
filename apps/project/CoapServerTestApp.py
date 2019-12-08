@@ -12,7 +12,7 @@ class CoAPServer(CoAP):
         self.add_resource('temp1/',SourceHandler())
         
 def main():
-    server = CoAPServer("0.0.0.0", 5683)
+    server = CoAPServer("10.0.0.175", 5683)
     print("server is running")
     #try:
         #server.listen(10)
