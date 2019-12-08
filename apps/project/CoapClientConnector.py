@@ -32,7 +32,8 @@ class CoapClientConnector:
             '''
         
             #post the jsondata to the server
-            response = self.client.post(resourceName, sensorData, None, 10)
+            
+            response = self.client.post(resourceName, sensorData.encode(), None, 10)
             #logging.info(response.pretty_print())
 
             '''
