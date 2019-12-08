@@ -7,6 +7,7 @@ from coapthon.client.helperclient import HelperClient
 import random
 import logging
 from time import sleep
+from sense_hat import SenseHat
 from labs.common.SensorData import SensorData
 from labs.common.DataUtil import DataUtil
 
@@ -18,10 +19,13 @@ class CoapClientConnector:
         self.client = HelperClient(server=(serverAddr, port))
     
     def runTests(self,resourceName):
+        sense_hat = SenseHat()
         while True:
             #generated a random temperture data and created a sensordata object
-            temperature = random.uniform(0.0,30.0)  
-            humidity = random.uniform(30.0,40.0)
+            #temperature = random.uniform(0.0,30.0)  
+            #humidity = random.uniform(30.0,40.0)
+            temperature = sense_hat.get_temperature_from_humidity()
+            humidity = sense_hat.get_humidity()
             #sensordata.addValue(temperature)
             sensorData = str(temperature) +','+ str(humidity) 
             '''
@@ -50,7 +54,7 @@ class CoapClientConnector:
             response = self.client.delete(resourceName, None, 10)
             logging.info(response.pretty_print())
             '''
-            sleep(10)
+            sleep(60)
 
             #stop the client
             #self.client.stop()    
