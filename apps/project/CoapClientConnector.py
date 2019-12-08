@@ -21,8 +21,9 @@ class CoapClientConnector:
         while True:
             #generated a random temperture data and created a sensordata object
             temperature = random.uniform(0.0,30.0)  
+            humidity = random.uniform(30.0,40.0)
             #sensordata.addValue(temperature)
-
+            sensorData = str(temperature) +','+ str(humidity) 
             '''
             #created DataUtil instance and converted the sensordata to json data
             datautil = DataUtil()
@@ -31,7 +32,7 @@ class CoapClientConnector:
             '''
         
             #post the jsondata to the server
-            response = self.client.post(resourceName, str(temperature), None, 10)
+            response = self.client.post(resourceName, sensorData, None, 10)
             #logging.info(response.pretty_print())
 
             '''
