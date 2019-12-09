@@ -24,38 +24,13 @@ class CoapClientConnector:
             #generated a random temperture data and created a sensordata object
             #temperature = random.uniform(0.0,30.0)  
             #humidity = random.uniform(30.0,40.0)
-            #
+            
+            #get sensor data from senseHat sensor
             temperature = sense_hat.get_temperature_from_humidity()
             humidity = sense_hat.get_humidity()
-            #sensordata.addValue(temperature)
             sensorData = str(temperature) +','+ str(humidity) 
-            '''
-            #created DataUtil instance and converted the sensordata to json data
-            datautil = DataUtil()
-            jsondata = datautil.toJsonFromSensorData(sensordata) 
-            print("the first json:\n" + jsondata)
-            '''
-        
-            #post the jsondata to the server
-            
+            logging.info(sensorData)
+            #post the sensorData to the server
             response = self.client.post(resourceName, sensorData)
              
-            #logging.info(response.pretty_print())
-
-            '''
-            #get data from the server
-            response = self.client.get(resourceName)
-            logging.info(response.pretty_print())
-
-            #put jsondata to the server
-            response = self.client.put(resourceName, str(temperature), None, 10)
-            logging.info(response.pretty_print())
-
-            #delete resources
-            response = self.client.delete(resourceName, None, 10)
-            logging.info(response.pretty_print())
-            '''
-            sleep(60)
-
-            #stop the client
-            #self.client.stop()    
+            sleep(60)  

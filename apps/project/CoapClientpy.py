@@ -7,7 +7,7 @@ Created on Nov 1, 2019
 import logging
 from project.CoapClientConnector import CoapClientConnector
 
-class CoapClientTest:
+class CoapClientpy:
     def coapclient(self):
         host = '10.0.0.60'
         port = 5683
@@ -18,5 +18,5 @@ class CoapClientTest:
     
 if __name__ == '__main__':
     logging.basicConfig(format='%(asctime)s:%(levelname)s:%(message)s', level=logging.INFO)
-    coapClientTest = CoapClientTest()
-    coapClientTest.coapclient()  
+    coapClientpy = CoapClientpy()
+    coapClientpy.coapclient()  

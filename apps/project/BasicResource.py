@@ -1,11 +1,7 @@
-'''
-Created on Dec 8, 2019
-
-@author: cytang
-'''
 from coapthon.resources.resource import Resource
 from sense_hat import SenseHat
 from project import SmtpClientConnector
+import logging
 
 
 class BasicResource(Resource):
@@ -20,22 +16,24 @@ class BasicResource(Resource):
         return self
 
     def render_PUT(self, request):
+        #when client call put, this method will be revoked
         self.payload = request.payload
         payloads = self.payload.split(',')
         air = float(payloads[0])
         water = float(payloads[1])
         
         if air != self.airconditioner:
+            #display the temperature of air-conditioner on the LED screen of the SenseHat
             self.airconditioner = air
             senseHat = SenseHat()
             senseHat.show_message(payloads[0])
             
         if water != self.watering:
             self.watering = water
+            #connect to smtp connector and send a email
             smtpClientConnector = SmtpClientConnector.SmtpClientConnector()
             smtpClientConnector.publishMessage("auto watering", "have automatically watered plants")
-        
-        print(self.payload)
+        logging.info("current actuator information"+self.payload)
         return self
 
     def render_POST(self, request):
